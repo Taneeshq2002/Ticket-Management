@@ -41,15 +41,16 @@ const Navigation = ({ account, setAccount, tokenMaster, provider }) => {
 
       {account&&tokenMaster ? (
         <div>
-    {account && (
-      <button onClick={withdrawalHandler}>Withdraw</button>
-    )}
+    
     <button
           type="button"
           className='nav__connect'
         >
           {account.slice(0, 6) + '...' + account.slice(38, 42)}
         </button>
+        {account && (
+      <button onClick={withdrawalHandler} className="nav__withdraw">Withdraw</button>
+    )}
   </div>
         
       ) : (
