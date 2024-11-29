@@ -1,6 +1,9 @@
 import { ethers } from 'ethers'
+import { useNavigate } from 'react-router-dom';
 
 const Navigation = ({ account, setAccount, tokenMaster, provider }) => {
+
+  const navigate = useNavigate(); // Initialize navigate hook
 
   const connectHandler = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -23,6 +26,10 @@ const Navigation = ({ account, setAccount, tokenMaster, provider }) => {
       alert('Failed to withdraw funds. Make sure you are the contract owner.')
     }
   }
+
+  const handleViewTickets = () => {
+    navigate('/tickets');  
+  };
 
   return (
     <nav>
@@ -49,7 +56,10 @@ const Navigation = ({ account, setAccount, tokenMaster, provider }) => {
           {account.slice(0, 6) + '...' + account.slice(38, 42)}
         </button>
         {account && (
+          <div>
       <button onClick={withdrawalHandler} className="nav__withdraw">Withdraw</button>
+      <button onClick={handleViewTickets} className="nav__view-tickets">View Tickets</button>
+      </div>
     )}
   </div>
         
@@ -62,13 +72,6 @@ const Navigation = ({ account, setAccount, tokenMaster, provider }) => {
         >
           Connect
         </button>
-        <button
-        type="button"
-        className="nav__withdraw"
-        onClick={withdrawalHandler}
-      >
-        Withdraw Funds
-      </button>
     </div>
       )}
     </nav>

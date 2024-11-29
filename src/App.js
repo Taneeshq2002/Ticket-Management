@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
-
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // Components
 import Navigation from './components/Navigation'
 import Sort from './components/Sort'
 import Card from './components/Card'
 import SeatChart from './components/SeatChart'
-
+import TicketPage from './components/TicketPage';
 // ABIs
 import TokenMaster from './abis/TokenMaster.json'
 
@@ -71,41 +71,60 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <header>
-        <Navigation account={account} setAccount={setAccount} tokenMaster={tokenMaster} 
-  provider={provider}  />
-
-        <h2 className="header__title"><strong>Event</strong> Tickets</h2>
-      </header>
-
-      <Sort />
-
-      <div className='cards'>
-        {occasions.map((occasion, index) => (
-          <Card
-            occasion={occasion}
-            id={index + 1}
+    <Router>
+      <div>
+        {/* Navigation */}
+        <header>
+          <Navigation
+            account={account}
+            setAccount={setAccount}
             tokenMaster={tokenMaster}
             provider={provider}
-            account={account}
-            toggle={toggle}
-            setToggle={setToggle}
-            setOccasion={setOccasion}
-            key={index}
           />
-        ))}
-      </div>
+          <h2 className="header__title">
+            <strong>Event</strong> Tickets
+          </h2>
+        </header>
 
-      {toggle && (
-        <SeatChart
-          occasion={occasion}
-          tokenMaster={tokenMaster}
-          provider={provider}
-          setToggle={setToggle}
-        />
-      )}
-    </div>
+        {/* Routes and Content */}
+        <Routes>
+          <Route path="/tickets" element={<TicketPage />} />  {/* Route to TicketPage */}
+          <Route path="/" element={
+            <>
+              {/* Sort component to filter the events */}
+              <Sort />
+
+              {/* Display event cards */}
+              <div className="cards">
+                {occasions.map((occasion, index) => (
+                  <Card
+                    occasion={occasion}
+                    id={index + 1}
+                    tokenMaster={tokenMaster}
+                    provider={provider}
+                    account={account}
+                    toggle={toggle}
+                    setToggle={setToggle}
+                    setOccasion={setOccasion}
+                    key={index}
+                  />
+                ))}
+              </div>
+
+              {/* Show SeatChart if toggle is true */}
+              {toggle && (
+                <SeatChart
+                  occasion={occasion}
+                  tokenMaster={tokenMaster}
+                  provider={provider}
+                  setToggle={setToggle}
+                />
+              )}
+            </>
+          } />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

@@ -548,3 +548,15 @@ header {
 .nav__withdraw:hover {
   background-color: #e14c4f;
 }
+.nav__view-tickets{
+  background-color: #a4ff5a;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.nav__view-tickets:hover {
+  background-color: #b9e14c;
+}
