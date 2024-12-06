@@ -15,13 +15,15 @@ function TicketPage() {
   const [provider, setProvider] = useState(null);
   const [account, setAccount] = useState(null);
   const [tickets, setTickets] = useState([]);
+  const [tokenMaster, setTokenMaster] = useState(null)
 
   const loadBlockchainData = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     setProvider(provider);
 
     const network = await provider.getNetwork();
-
+    const tokenMaster = new ethers.Contract(config[31337].TokenMaster.address, TokenMaster, provider)
+    setTokenMaster(tokenMaster)
     // Listen for account changes
     window.ethereum.on('accountsChanged', async () => {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -36,14 +38,29 @@ function TicketPage() {
     }
   };
 
-  const fetchUserTickets = async (userAddress) => {
+  const fetchUserTickets = async () => {
+    if (!account || !provider || !tokenMaster) return;
+
     try {
-      const response = await axios.get(`/api/user-tickets/${userAddress}`);
-      if (response.data.success) {
-        setTickets(response.data.tickets);
-      } else {
-        console.error('Failed to fetch tickets:', response.data.message);
+      const signer = provider.getSigner();
+      const contract = tokenMaster.connect(signer);
+      try{
+
+        const ticketsFromChain = await contract.getTicketsByOwner(account);
+        const formattedTickets = ticketsFromChain.map((ticket) => ({
+          ticketId: ticket.ticketId.toString(),
+          occasionId: ticket.occasionId.toString(),
+          seatNumber: ticket.seatNumber.toString(),
+        }));
+  
+        setTickets(formattedTickets);
       }
+      catch(err){
+        console.log(err);
+        
+      }
+
+     
     } catch (error) {
       console.error('Error fetching tickets:', error);
     }
@@ -57,7 +74,7 @@ function TicketPage() {
     if (account) {
       fetchUserTickets(account);
     }
-  }, [account]);
+  }, [account,provider,tokenMaster]);
 
   return (
     <div>

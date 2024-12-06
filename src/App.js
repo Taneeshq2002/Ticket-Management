@@ -42,7 +42,8 @@ function App() {
       const occasion = await tokenMaster.getOccasion(i)
       occasions.push(occasion)
     }
-
+    console.log(occasions);
+    
     setOccasions(occasions)
 
     window.ethereum.on('accountsChanged', async () => {
@@ -88,7 +89,7 @@ function App() {
 
         {/* Routes and Content */}
         <Routes>
-          <Route path="/tickets" element={<TicketPage />} />  {/* Route to TicketPage */}
+        <Route path="/tickets" element={<TicketPage />} /> {/* Route to TicketPage */}
           <Route path="/" element={
             <>
               {/* Sort component to filter the events */}

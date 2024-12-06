@@ -14,10 +14,17 @@ const tokenMasterContract = new ethers.Contract(contractAddress, TokenMasterABI,
 router.get('/user-tickets/:address', async (req, res) => {
   try {
     const userAddress = req.params.address;
+    console.log(userAddress);
+    
 
     // Call the contract method to get tickets owned by the user
-    const tickets = await tokenMasterContract.getTicketsByOwner(userAddress);
-
+    const ticketData = await tokenMasterContract.getTicketsByOwner(userAddress);
+    const tickets = ticketData.map(ticket => ({
+      ticketId: ticket[0].toNumber(), // Assuming BigNumber values, convert to numbers
+      occasionId: ticket[1].toNumber(),
+      seatNumber: ticket[2].toNumber(),
+      // eventDate: new Date(ticket[3] * 1000).toISOString(), // Convert Unix timestamp to ISO string
+    }));
     res.json({
       success: true,
       tickets,
