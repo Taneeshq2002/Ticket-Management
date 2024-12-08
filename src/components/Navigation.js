@@ -31,6 +31,10 @@ const Navigation = ({ account, setAccount, tokenMaster, provider }) => {
     navigate('/tickets');  
   };
 
+  const handleSetEvent=()=>{
+    navigate("/events");
+  }
+
   return (
     <nav>
       <div className='nav__brand'>
@@ -59,6 +63,7 @@ const Navigation = ({ account, setAccount, tokenMaster, provider }) => {
           <div>
       <button onClick={withdrawalHandler} className="nav__withdraw">Withdraw</button>
       <button onClick={handleViewTickets} className="nav__view-tickets">View Tickets</button>
+      <button onClick={handleSetEvent} className="nav__set-event">Set Events</button>
       </div>
     )}
   </div>

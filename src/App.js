@@ -7,6 +7,7 @@ import Sort from './components/Sort'
 import Card from './components/Card'
 import SeatChart from './components/SeatChart'
 import TicketPage from './components/TicketPage';
+import EventPage from './components/EventPage'
 // ABIs
 import TokenMaster from './abis/TokenMaster.json'
 
@@ -90,6 +91,9 @@ function App() {
         {/* Routes and Content */}
         <Routes>
         <Route path="/tickets" element={<TicketPage />} /> {/* Route to TicketPage */}
+        <Route path="/events" element={<EventPage tokenMasterContract={
+          tokenMaster
+        }/>} /> {/* Route to TicketPage */}
           <Route path="/" element={
             <>
               {/* Sort component to filter the events */}

@@ -10,6 +10,7 @@ import TokenMaster from '../abis/TokenMaster.json';
 
 // Config
 import config from '../config.json';
+import TicketQRCode from './TicketQRCode';
 
 function TicketPage() {
   const [provider, setProvider] = useState(null);
@@ -51,6 +52,7 @@ function TicketPage() {
           ticketId: ticket.ticketId.toString(),
           occasionId: ticket.occasionId.toString(),
           seatNumber: ticket.seatNumber.toString(),
+          seller:ticket.seller.toString()
         }));
   
         setTickets(formattedTickets);
@@ -84,9 +86,10 @@ function TicketPage() {
         {tickets.length > 0 ? (
           tickets.map((ticket, index) => (
             <div key={index} className="ticket">
-              <p><strong>Ticket ID:</strong> {ticket.ticketId}</p>
+              {/* <p><strong>Ticket ID:</strong> {ticket.ticketId}</p>
               <p><strong>Event ID:</strong> {ticket.occasionId}</p>
-              <p><strong>Seat Number:</strong> {ticket.seatNumber}</p>
+              <p><strong>Seat Number:</strong> {ticket.seatNumber}</p> */}
+              <TicketQRCode ticket={ticket} />
             </div>
           ))
         ) : (

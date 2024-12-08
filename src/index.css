@@ -560,3 +560,86 @@ header {
 .nav__view-tickets:hover {
   background-color: #b9e14c;
 }
+.nav__set-event{
+  background-color: #af5aff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.nav__set-event:hover {
+  background-color: #be4ce1;
+}
+.event-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.event-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.event-page form {
+  display: grid;
+  gap: 15px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  margin-top: 10px;
+}
+
+.event-page form label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.event-page form input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.event-page form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.event-page form button {
+  background-color: #28a745;
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.event-page form button:hover {
+  background-color: #218838;
+}
+
+.event-page form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.event-page .success {
+  color: #28a745;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}

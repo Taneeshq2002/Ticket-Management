@@ -270,6 +270,11 @@
             "internalType": "address",
             "name": "owner",
             "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "seller",
+            "type": "address"
           }
         ],
         "internalType": "struct TokenMaster.Ticket",
@@ -310,6 +315,11 @@
           {
             "internalType": "address",
             "name": "owner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "seller",
             "type": "address"
           }
         ],
@@ -714,6 +724,11 @@
       {
         "internalType": "address",
         "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "seller",
         "type": "address"
       }
     ],

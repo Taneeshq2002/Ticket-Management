@@ -17,6 +17,7 @@ contract TokenMaster is ERC721 {
         string date;
         string time;
         string location;
+        address organizer;//address of event creator
     }
 
     struct Ticket {
@@ -24,6 +25,7 @@ contract TokenMaster is ERC721 {
         uint256 occasionId; // Event/Occasion ID
         uint256 seatNumber; // Seat number for the ticket
         address owner; // Owner of the ticket
+        address seller; //address of seller
     }
 
     mapping(uint256 => Occasion) public occasions; // Mapping occasion ID to Occasion details
@@ -43,6 +45,12 @@ contract TokenMaster is ERC721 {
         require(msg.sender == owner, "Only the contract owner can perform this action");
         _;
     }
+
+    modifier onlyOrganizer(uint256 _occasionId) {
+    require(occasions[_occasionId].organizer == msg.sender, "Only the organizer can perform this action");
+    _;
+}
+
 
     constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {
         owner = msg.sender;
@@ -65,7 +73,8 @@ contract TokenMaster is ERC721 {
             _maxTickets,
             _date,
             _time,
-            _location
+            _location,
+            msg.sender
         );
     }
 
@@ -91,7 +100,7 @@ contract TokenMaster is ERC721 {
 
         // Create a unique ticket
         uint256 ticketId = nextTicketId++;
-        tickets[ticketId] = Ticket(ticketId, _id, _seat, msg.sender);
+        tickets[ticketId] = Ticket(ticketId, _id, _seat, msg.sender,owner);
 
         // Mint the NFT to represent the ticket
         totalSupply++;
@@ -137,4 +146,27 @@ contract TokenMaster is ERC721 {
         (bool success, ) = owner.call{value: address(this).balance}("");
         require(success, "Withdraw failed");
     }
+    function getOccasionsByOrganizer(address _organizer) public view returns (Occasion[] memory) {
+    uint256 count = 0;
+
+    // Count occasions created by the organizer
+    for (uint256 i = 1; i <= totalOccasions; i++) {
+        if (occasions[i].organizer == _organizer) {
+            count++;
+        }
+    }
+
+    // Populate an array with the occasions
+    Occasion[] memory organizerOccasions = new Occasion[](count);
+    uint256 index = 0;
+    for (uint256 i = 1; i <= totalOccasions; i++) {
+        if (occasions[i].organizer == _organizer) {
+            organizerOccasions[index] = occasions[i];
+            index++;
+        }
+    }
+
+    return organizerOccasions;
+}
+
 }
